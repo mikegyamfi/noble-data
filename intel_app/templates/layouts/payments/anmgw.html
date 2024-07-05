@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'inc/header.html' %}
+
+<header>
+  {% include 'inc/header.html' %}
+</header>
+
+<main>
+  <div class="page-section mt-5" id="services">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="title-section">Payment Checkout Form</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+      <div>
+        <form method="post" action="{% url 'anmgw_payment_checkout' reference=reference %}" id="payment-form">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="phone">Phone Number</label>
+              {{ form.phone_number }}
+              <small>Number must be 10 digits. E.g. 0200000000</small>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Mobile Network</label>
+              {{ form.mobile_network }}
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="reference">Reference</label>
+              <input class="form-control" type="text" disabled value="{{ reference }}">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="amount">Amount</label>
+              <input class="form-control" type="text" disabled value="{{ amount }}">
+            </div>
+          </div>
+          <input type="hidden" id="reference" name="reference" value="{{ reference }}">
+          <button class="btn btn-outline-success" type="submit">Checkout</button>
+        </form>
+
+        <!-- Payment status message -->
+        <div id="payment-status" style="display: none;">
+          <p>Processing payment, please wait...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include 'inc/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    const reference = '{{ reference }}';
+
+    function checkPaymentStatus() {
+      $.ajax({
+        url: `{% url 'check_payment_status' reference %}`,
+        method: 'GET',
+        success: function(data) {
+          if (data.status === 'Completed') {
+              Swal.fire({text: 'Process has been completed successfully.'});
+            {#window.location.href = `{% url 'payment_receipt' reference %}`;#}
+          } else if (data.status === 'Failed') {
+            Swal.fire({text: 'Payment failed. Please try again.'});
+            window.location.reload();
+          } else {
+            setTimeout(checkPaymentStatus, 5000); // Check every 5 seconds
+          }
+        }
+      });
+    }
+
+    $('#payment-form').on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: $(this).attr('action'),
+        method: $(this).attr('method'),
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === "Success") {
+            $('#payment-form').hide();
+            $('#payment-status').show();
+            checkPaymentStatus();
+          } else {
+              console.log("hello world")
+            Swal.fire({text: 'Something went wrong. Please try again.'});
+          }
+        }
+      });
+    });
+  });
+
+  function payWithPaystack() {
+    // Paystack payment integration here
+  }
+</script>
+{% endblock %}

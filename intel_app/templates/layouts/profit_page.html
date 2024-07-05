@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+  {% block content %}
+  {% include 'inc/header.html' %}
+
+  <header>
+    {% include 'inc/header.html' %}
+
+    <div class="container mt-5">
+      <div class="page-banner">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-md-6">
+            <nav aria-label="Breadcrumb">
+              <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Admin</li>
+              </ul>
+            </nav>
+            <h1 class="text-center">Admin</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-section" id="services">
+      <div class="container">
+          <div class="text-center">
+              <h2 class="title-section">Profit Calculators</h2>
+              <div class="divider mx-auto"></div>
+          </div>
+         <div class="row justify-content-center">
+       <div class="col-12 col-lg-auto py-3 wow fadeInLeft">
+         <div class="card-pricing">
+           <div class="header">
+             <div class="price-icon my-1">
+                 <i class="fa-solid fa-calculator"></i>
+             </div>
+             <div class="price-title">AirtelTigo</div>
+           </div>
+           <div class="body py-3">
+             <div class="price-info">
+               <p>Get to know how much you make</p>
+             </div>
+           </div>
+           <div class="footer">
+             <a href="{% url 'channel_profit' channel='AT' %}" class="btn btn-outline rounded-pill">Insights</a>
+           </div>
+         </div>
+       </div>
+
+       <div class="col-12 col-lg-auto py-3 wow fadeInLeft">
+         <div class="card-pricing">
+           <div class="header">
+             <div class="price-icon my-1"><i class="fa-solid fa-calculator"></i></div>
+             <div class="price-title">AT Big Time</div>
+           </div>
+           <div class="body py-3">
+             <div class="price-info">
+               <p>Get to know how much you make</p>
+             </div>
+           </div>
+           <div class="footer">
+             <a href="{% url 'channel_profit' channel='BigTime' %}" class="btn btn-outline rounded-pill">Insights</a>
+           </div>
+         </div>
+       </div>
+
+       <div class="col-12 col-lg-auto py-3 wow fadeInUp">
+         <div class="card-pricing">
+           <div class="header">
+             <div class="price-icon my-1"><i class="fa-solid fa-calculator"></i></div>
+             <div class="price-title">MTN</div>
+           </div>
+           <div class="body py-3">
+             <div class="price-info">
+               <p>Get to know how much you make</p>
+             </div>
+           </div>
+           <div class="footer">
+             <a href="{% url 'channel_profit' channel='MTN' %}" class="btn btn-outline rounded-pill">Insights</a>
+           </div>
+         </div>
+       </div>
+
+
+
+     </div>
+      </div>
+  </div> <!-- .page-section -->
+  </main>
+
+  {% include 'inc/footer.html' %}
+
+
+{% endblock %}
