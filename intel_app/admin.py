@@ -34,7 +34,7 @@ class IShareBundleTransactionAdmin(admin.ModelAdmin):
 
 class MTNTransactionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['user', 'bundle_number', 'offer', 'reference', 'transaction_status', 'transaction_date']
-    search_fields = ['reference', 'bundle_number']
+    search_fields = ['reference', 'bundle_number', 'user__username']
 
 
 class PaymentAdmin(admin.ModelAdmin):
@@ -48,12 +48,12 @@ class TopUpRequestAdmin(admin.ModelAdmin):
 class WalletTransactionAdmin(admin.ModelAdmin):
     list_display = ['user', 'transaction_type', 'transaction_amount', 'transaction_use', 'new_balance',
                     'transaction_date']
-    search_fields = ['user', 'transaction_type']
+    search_fields = ['user', 'transaction_type', 'user__username']
 
 
 class VodafoneTransactionAdmin(admin.ModelAdmin):
     list_display = ['user', 'bundle_number', 'offer', 'reference', 'transaction_status', 'transaction_date']
-    search_fields = ['reference', 'bundle_number']
+    search_fields = ['reference', 'bundle_number', 'user__username']
 
 
 admin.site.register(models.CustomUser, CustomUserAdmin)
